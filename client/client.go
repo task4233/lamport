@@ -8,15 +8,30 @@ import (
 	"time"
 )
 
-func main() {
-	ipv4Addr := "224.0.0.1"
-	port := ":56789"
-	addr := ipv4Addr + port
-	waitTime := 1
-	format := "Message "
+// Client はIPアドレスとポート番号を保持します
+type Client struct {
+	ipv4 string
+	port string
+}
 
-	fmt.Println("Sender: ", addr)
-	conn, err := net.Dial("udp", addr)
+// Addr はIPアドレスとポート番号を結合したstringを返します
+func (s *Client) Addr() string {
+	return fmt.Sprintf("%s:%s", s.ipv4, s.port)
+}
+
+const (
+	waitTime = 1
+	format   = "Message "
+)
+
+func main() {
+	client := &Client{
+		ipv4: "224.0.0.1",
+		port: "56789",
+	}
+	fmt.Println("Sender: ", client.Addr())
+
+	conn, err := net.Dial("udp", client.Addr())
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to Dial: %s", err.Error())
 		os.Exit(1)

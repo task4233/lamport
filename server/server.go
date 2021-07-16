@@ -6,13 +6,26 @@ import (
 	"os"
 )
 
-func main() {
-	ipv4Addr := "224.0.0.1"
-	port := ":56789"
-	addr := ipv4Addr + port
-	fmt.Println("Receiver: ", addr)
+// Server はIPアドレスとポート番号を保持します
+type Server struct {
+	ipv4 string
+	port string
+}
 
-	udpAddr, err := net.ResolveUDPAddr("udp", addr)
+// Addr はIPアドレスとポート番号を結合したstringを返します
+func (s *Server) Addr() string {
+	return fmt.Sprintf("%s:%s", s.ipv4, s.port)
+}
+
+func main() {
+	srv := &Server{
+		ipv4: "224.0.0.1",
+		port: "56789",
+	}
+
+	fmt.Println("Receiver: ", srv.Addr())
+
+	udpAddr, err := net.ResolveUDPAddr("udp", srv.Addr())
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to ResolveUDP: %s", err.Error())
 		os.Exit(1)
