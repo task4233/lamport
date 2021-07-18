@@ -67,7 +67,7 @@ func (c *Client) SendACK(recvMes []byte) error {
 }
 
 func (c *Client) ExecuteTask() {
-	fmt.Printf("[ID%d](t=%d) ExecuteTask%d\n", c.id, c.tick, c.id)
+	fmt.Printf("[ID%d](t=%d) Execute Task -> %d\n", c.id, c.tick, c.id)
 	c.tick++
 }
 
@@ -96,7 +96,7 @@ func main() {
 		tick: 0,
 	}
 
-	fmt.Printf("Begin on %s\n", time.Now().Format("15:04:05"))
+	fmt.Printf("[ID%d] Begin on %s\n", srv.id, time.Now().Format("15:04:05"))
 
 	checked := 0
 
@@ -183,6 +183,6 @@ func main() {
 
 	}
 
-	fmt.Printf("End on %s\n", time.Now().Format("15:04:05"))
+	fmt.Printf("[ID%d] End on %s\n", srv.id, time.Now().Format("15:04:05"))
 
 }
