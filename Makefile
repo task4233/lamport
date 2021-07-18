@@ -1,11 +1,10 @@
 build:
-	(cd client; go build . ; cd ..)
-	(cd server; go build . ; cd ..)
+	go build .
 
 run:
-	./server/server &
-	./client/client &
+	./lamport 0 &
+	./lamport 1 &
 
 clean:
-	pkill server
-	pkill client
+	pkill lamport
+
