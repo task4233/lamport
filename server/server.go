@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net"
 	"os"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 // Server はIPアドレスとポート番号を保持します
@@ -49,6 +51,10 @@ func main() {
 		fmt.Println("Sender: ", remoteAddr.String())
 		fmt.Println("Content: ", string(buf[:length]))
 
+		if cmp.Diff(buf[:3], []byte("no:")) == "" {
+			continue
+		}
+
 		go func() {
 			conn, err := net.Dial("udp", srv.Addr())
 			if err != nil {
@@ -57,8 +63,9 @@ func main() {
 			}
 			defer conn.Close()
 
-			conn.Write(buf[:length])
-			fmt.Println(string(buf[:length]))
+			mes := append([]byte("no:"), buf[:length]...)
+			conn.Write(mes)
+			fmt.Println(string(mes))
 		}()
 	}
 
