@@ -10,6 +10,7 @@ import (
 
 // Server はIPアドレスとポート番号を保持します
 type Server struct {
+	id int
 	ipv4 string
 	port string
 }
@@ -17,6 +18,10 @@ type Server struct {
 // Addr はIPアドレスとポート番号を結合したstringを返します
 func (s *Server) Addr() string {
 	return fmt.Sprintf("%s:%s", s.ipv4, s.port)
+}
+
+func Ack(mes *[]byte) {
+	*mes = append([]byte("ACK:")
 }
 
 func main() {
