@@ -48,6 +48,18 @@ func main() {
 
 		fmt.Println("Sender: ", remoteAddr.String())
 		fmt.Println("Content: ", string(buf[:length]))
+
+		go func() {
+			conn, err := net.Dial("udp", srv.Addr())
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "failed to Dial: %s", err.Error())
+				os.Exit(1)
+			}
+			defer conn.Close()
+
+			conn.Write(buf[:length])
+			fmt.Println(string(buf[:length]))
+		}()
 	}
 
 }

@@ -12,6 +12,13 @@ import (
 type Client struct {
 	ipv4 string
 	port string
+	id   int
+	tick int
+}
+
+func (s *Client) Run() error {
+
+	return nil
 }
 
 // Addr はIPアドレスとポート番号を結合したstringを返します
